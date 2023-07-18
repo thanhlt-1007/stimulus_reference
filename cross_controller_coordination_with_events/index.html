@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cross-Controller Coordination With Events</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>Cross-Controller Coordination With Events</h1>
+
+  <div data-controller="clipboard effects"
+       data-action="clipboard:copy->effects#flash">
+    PIN: <input data-clipboard-target="source" type="text" value="1234" readonly>
+    <button data-action="clipboard#copy">Copy to Clipboard</button>
+  </div>
+
+  <script type="module">
+    import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+    window.Stimulus = Application.start()
+
+    Stimulus.register("clipboard", class extends Controller {
+      static targets = ["source"]
+
+      connect() {
+        console.log("clipboard#connect")
+      }
+
+      copy() {
+        console.log("clipboard#copy")
+        this.dispatch("copy", { detail: { content: this.sourceTarget.value }})
+        navigator.clipboard.writeText(this.sourceTarget.value)
+      }
+    })
+
+    Stimulus.register("effects", class extends Controller {
+      connect() {
+        console.log("effects#connect")
+      }
+
+      flash(event) {
+        console.log("effects#flash")
+        console.log(event)
+        console.log(`event: ${event}`)
+        console.log(`detail: ${event.detail.content}`)
+        console.log(`target: ${event.target.innerHTML}`)
+        console.log(`prefix: ${event.prefix}`)
+        console.log(`bubbles: ${event.bubbles}`)
+        console.log(`cancelable: ${event.cancelable}`)
+      }
+    })
+  </script>
+</body>
+</html>
