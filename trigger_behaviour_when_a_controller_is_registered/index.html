@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trigger Behaviour When A Controller Is Registered</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>Trigger Behaviour When A Controller Is Registered</h1>
+
+  <button class="legacy-spinner-button">
+    Legacy spinner button
+  </button>
+
+  <button class="legacy-spinner-button">
+    Legacy spinner button
+  </button>
+
+  <script type="module">
+    import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+    window.Stimulus = Application.start()
+
+    Stimulus.register("spinner-button", class extends Controller {
+      static targets = ["name"]
+
+      static afterLoad(identifier, application) {
+        console.log("---SpinnerButtonController afterLoad---")
+
+        console.log(`identifier: ${identifier}`)
+
+        const { controllerAttribute } = application.schema
+        console.log(`controllerAttribute: ${controllerAttribute}`)
+
+        // update any legacy buttons ưith the controller's registered identifier
+        const updateLegacySpinners = () => {
+          let buttons = Array.from(document.getElementsByClassName("legacy-spinner-button"))
+          buttons.forEach((button) => {
+            button.setAttribute(controllerAttribute, identifier)
+          })
+        }
+
+        // called as soon as registered so DOM may how have loaded yet
+        if (document.readyState == "loading") {
+          document.addEventListener("DOMContentLoaded", updateLegacySpinners)
+        } else {
+          updateLegacySpinners()
+        }
+      }
+
+      connect() {
+        console.log("---SpinnerButtonController connected---")
+      }
+    })
+  </script>
+</body>
+</html>
