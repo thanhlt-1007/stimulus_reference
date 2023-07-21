@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Global Events</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>Global Events</h1>
+  <div data-controller="global-event"
+       data-action="resize@window->global-event#resizeWindow">
+  </div>
+
+  <script type="module">
+    import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+    window.Stimulus = Application.start()
+
+    Stimulus.register("global-event", class extends Controller {
+      resizeWindow() {
+        console.log("Window is resizing...")
+      }
+    })
+  </script>
+</body>
+</html>
