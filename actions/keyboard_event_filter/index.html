@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KeyboardEvent Filter</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>KeyboardEvent Filter</h1>
+  <div data-controller="keyboard">
+    <input type="text"
+      data-action="keydown.enter->keyboard#enter
+                   keydown.tab->keyboard#tab
+                   keydown.esc->keyboard#esc
+                   keydown.space->keyboard#space
+
+                   keydown.up->keyboard#up
+                   keydown.down->keyboard#down
+                   keydown.left->keyboard#left
+                   keydown.right->keyboard#right
+
+                   keydown.home->keyboard#home
+                   keydown.end->keyboard#end
+
+                   keydown.a->keyboard#a
+                   keydown.z->keyboard#z
+
+                   keydown.0->keyboard#0
+                   keydown.9->keyboard#9
+
+                   keydown.ctrl->keyboard#ctrl
+                   keydown.ctrl+a->keyboard#ctrl_a">
+  </div>
+
+  <script type="module">
+    import { Application, Controller } from "https://unpkg.com/@hotwired/stimulus/dist/stimulus.js"
+    window.Stimulus = Application.start()
+
+    Stimulus.register("keyboard", class extends Controller {
+      static targets = ["name"]
+
+      enter(event) {
+        console.log("Enter is pressed.")
+      }
+
+      tab(event) {
+        console.log("Tab is pressed.")
+      }
+
+      esc(event) {
+        console.log("Escape is pressed.")
+      }
+
+      space(event) {
+        console.log("Space is pressed.")
+      }
+
+      up(event) {
+        console.log("ArrowUp is pressed.")
+      }
+
+      down(event) {
+        console.log("ArrowDown is pressed.")
+      }
+
+      left(event) {
+        console.log("ArrowLeft is pressed.")
+      }
+
+      right(event) {
+        console.log("ArrowRight is pressed.")
+      }
+
+      home(event) {
+        console.log("Home is pressed.")
+      }
+
+      end(event) {
+        console.log("End is pressed.")
+      }
+
+      a(event) {
+        console.log("a is pressed.")
+      }
+
+      z(event) {
+        console.log("z is pressed.")
+      }
+
+      0(event) {
+        console.log("0 is pressed.")
+      }
+
+      9(event) {
+        console.log("9 is pressed.")
+      }
+
+      ctrl(event) {
+        console.log("ctrl is pressed.")
+      }
+
+      ctrl_a(event) {
+        console.log("ctrl + a is pressed.")
+      }
+    })
+  </script>
+</body>
+</html>
